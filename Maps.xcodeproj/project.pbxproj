@@ -37,6 +37,20 @@
 			);
 			target = F9BD31243070CEF500378DE8 /* Maps */;
 		};
+		F9BD319830724B1700378DE8 /* Exceptions for "MapsUITests" folder in "MapsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MapsTests.swift,
+			);
+			target = F9BD31313070CEF600378DE8 /* MapsTests */;
+		};
+		F9BD319930724B1700378DE8 /* Exceptions for "MapsUITests" folder in "MapsUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MapsTests.swift,
+			);
+			target = F9BD313B3070CEF600378DE8 /* MapsUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +69,10 @@
 		};
 		F9BD313F3070CEF600378DE8 /* MapsUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F9BD319830724B1700378DE8 /* Exceptions for "MapsUITests" folder in "MapsTests" target */,
+				F9BD319930724B1700378DE8 /* Exceptions for "MapsUITests" folder in "MapsUITests" target */,
+			);
 			path = MapsUITests;
 			sourceTree = "<group>";
 		};
