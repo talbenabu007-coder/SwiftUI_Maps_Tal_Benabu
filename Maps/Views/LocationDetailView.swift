@@ -10,30 +10,41 @@ import MapKit
 
 struct LocationDetailView: View {
     @EnvironmentObject private var vm: LocationsViewModel
+    @Environment(\.colorScheme) var colorScheme
     let location:Location
     
     var body: some View {
+     
         ScrollView {
             VStack {
                 imageSeection
                 .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 10)
                 
-            VStack(alignment: .leading, spacing: 16) {
+                
+                VStack(alignment: .leading, spacing: 16) {
                     titleSection
                     Divider()
                     descriptionSection
-                VStack(spacing: 0) {
-                    Divider()
-                
-                    mapLayer
-                        .frame(height: 300)
-                        .cornerRadius(20)
-                        .padding()
+                    VStack(spacing: 0) {
+                        Divider()
+                        
+                        mapLayer
+                            .frame(height: UIDevice.current.userInterfaceIdiom == .pad ? 700 : 500)
+                        
+                            
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(.gray.opacity(0.3), lineWidth: 3)
+                            }
+                        
+                            .padding(UIDevice.current.userInterfaceIdiom == .phone ? 16 : 20)
+                        
+                        
+                    }
                 }
-                    
                 }
             }
-        }
         .ignoresSafeArea()
         .background(.ultraThinMaterial)
         .overlay(alignment: .topLeading) {
@@ -49,7 +60,7 @@ extension LocationDetailView {
                 Image($0)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: UIScreen.main.bounds.width)
+                    .containerRelativeFrame(.horizontal)
                     .clipped()
             }
         }
@@ -104,7 +115,7 @@ extension LocationDetailView {
             Image(systemName: "xmark")
                 .font(.headline)
                 .padding()
-                .foregroundStyle(.black)
+                .foregroundStyle(colorScheme == .dark ? .white : .black)
                 .background(.thinMaterial)
                 .clipShape(Circle())
                 .shadow(radius: 1)

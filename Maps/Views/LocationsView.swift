@@ -11,6 +11,8 @@ import MapKit
 struct LocationsView: View {
     
     @EnvironmentObject private var vm:LocationsViewModel
+    
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
             ZStack {
@@ -20,15 +22,28 @@ struct LocationsView: View {
                 VStack(spacing:10) {
                     header
                         .padding()
+                        .frame(maxWidth: 700)
                     
                     Spacer()
                     
                     locationsPreviewStack
                 }
             }
+    
+    
             .sheet(item: $vm.sheetLocation, onDismiss: nil) { location in
-                LocationDetailView(location: location)
-            }
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    LocationDetailView(location: location)
+                        .containerRelativeFrame(.vertical)
+                        .frame(width: 780, height: 980)
+                        .presentationSizing(.fitted)
+                }
+                
+                else {
+                    LocationDetailView(location: location)
+                }
+        }
     }
 }
 
@@ -41,14 +56,14 @@ extension LocationsView {
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
                    .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
                    .frame(height: 55)
                    .frame(maxWidth: .infinity)
                    .animation(.none, value: vm.mapLocation)
                   .overlay(alignment: .leading) {
                       Image(systemName: "arrow.down")
                            .font(.headline)
-                           .foregroundStyle(.black)
+                           .foregroundStyle(colorScheme == .dark ? .white : .black)
                           .padding()
                           .rotationEffect(Angle(degrees: vm.showLocationList ? 180 : 0))
                   }
@@ -83,7 +98,9 @@ extension LocationsView {
                 if vm.mapLocation == location {
                     LocationPreviewView(location: location)
                         .shadow(color: Color.black.opacity(0.3), radius: 20)
-                        .padding(.vertical)
+                        .frame(maxWidth: 700)
+                        .frame(maxWidth: .infinity)
+                        .padding()
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
 
                 }
